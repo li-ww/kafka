@@ -1,0 +1,14 @@
+spring:
+  kafka:
+    bootstrap-servers: 47.93.220.67:9092
+    consumer:
+      group-id: defaultGroup
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 65536
+      buffer-memory: 524288
+#partitioner:
+#  class: fun.lww.kafka.PartitionT
