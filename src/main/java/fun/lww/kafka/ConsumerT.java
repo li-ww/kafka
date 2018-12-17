@@ -15,21 +15,23 @@ import java.util.Properties;
 @Component
 public class ConsumerT {
 
-    @KafkaListener(topics = {"test", "test-topic"})
+    //队列模式
+    @KafkaListener(topics = {"CRBIS0002.000"})
     public void consumer(String msg) {
         System.out.println("消费者消费消息："+msg);
     }
 
+    //发布订阅模式
     public static void consumer2() {
         //手动提交offset
         Properties props = new Properties();
-        props.put("bootstrap.servers", "47.93.220.67:9092");
-        props.put("group.id", "test");
+        props.put("bootstrap.servers", "10.172.32.142:11001,10.172.32.143:11001,10.172.32.144:11001");
+        props.put("group.id", "myGroup");
         props.put("enable.auto.commit", "false");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         Consumer<String, String> consumer = new KafkaConsumer<String, String>(props);
-        consumer.subscribe(Arrays.asList("test"));
+        consumer.subscribe(Arrays.asList("record-dev"));
         final int minBatchSize = 20;
         List<ConsumerRecord<String, String>> list = new ArrayList<ConsumerRecord<String, String>>();
         while (true) {
@@ -63,6 +65,9 @@ public class ConsumerT {
             for (ConsumerRecord<String, String> record : records)
                 System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
         }*/
+
+
+
     }
 
     public static void main(String[] args) {
